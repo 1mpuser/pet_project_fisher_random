@@ -7,16 +7,120 @@
         /*body {
             /*background-color:#000080;
         }*/
-        #board{
-            margin: 30px;
-            border: 1px solid black;
-            display: block;
+        .row{
+            margin: 0 auto;
+            border: 0px solid black;
+            /*display: block;*/
+            font-size: 0;
+            width: 256px;
         }
+        #body{
+            background-color: aquamarine;
+        }
+        .cell {
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			font-family: arial;
+			display: inline-block;
+			font-size: 26px;
+			border: 0px solid #000;
+			cursor: pointer;
+			vertical-align: middle;
+			transition: background .1s;
+            background-color: deepskyblue;
+		}
+		/*.cell:hover {
+			background: #eee;
+		}*/
     </style>
 </head>
-<body >
-    <div id="board">Хуй</div>
-    <br>
+<body id="body">
+    <!-- <div id="board">Хуй</div>
+    <br> -->
+    <div id="board">
+        <div class="row">
+            <div class="cell" style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+        </div>
+        <div class="row">
+            <div class="cell"></div>
+            <div class="cell" style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+        </div>
+        <div class="row">
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+        </div>
+        <div class="row">
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+        </div>
+        <div class="row">
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+        </div>
+        <div class="row">
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+        </div>
+        <div class="row">
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+        </div>
+        <div class="row">
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+            <div class="cell"></div>
+            <div class="cell"style="background-color: azure;"></div>
+        </div>
+    </div>
     <button>Зарандомайзить</button>
     <script src="code.js"></script>
 </body>

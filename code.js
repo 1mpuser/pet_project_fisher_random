@@ -1,3 +1,4 @@
+'use strict';
 function createAnArrWithPiecePositions() {
 	function randomNumFromTo(min, max) {
 		max++;
@@ -63,5 +64,65 @@ function createAnArrWithPiecePositions() {
 	arrOfChessSquares = addSomethingInsteadFirstNumber(arrOfChessSquares, 'rook');
 	return arrOfChessSquares;
 }
-let arr = createAnArrWithPiecePositions();
-console.log(arr);
+function firstSymbolOfString(str) {
+	return str.charAt(0);
+}
+function testClick() {
+	for (let i = 0; i < cells.length; i++) {
+		if (cells[i] == this) alert(i);
+	}
+}
+
+/*function paintTheCellsBlackANdWhite(row) {
+	let children = row.children;
+	let numberOfRow;
+	let colorOfFirstCell;
+	let previousColor = '';
+	for (let i = 0; i < rows.length; i++) {
+		if (row[i] === row) {
+			numberOfRow = i;
+			break;
+		}
+	}
+	console.log(numberOfRow);
+	if (numberOfRow % 2 == 0) colorOfFirstCell = 'azure';
+	else colorOfFirstCell = 'dimgray';
+	if (colorOfFirstCell == 'azure') {
+		for (let child of children) {
+			if (previousColor == '' || previousColor == 'dimgray') {
+				child.style.backgroundColor = 'azure';
+				previousColor = 'azure';
+			}
+			if (previousColor == 'azure') {
+				child.style.backgroundColor = 'dimgray';
+				previousColor = 'dimgray';
+			}
+		}
+	} else
+		for (let child of children) {
+			if (previousColor == '' || previousColor == 'azure') {
+				child.style.backgroundColor = 'dimgray';
+				previousColor = 'dimgray';
+			}
+			if (previousColor == 'dimgray') {
+				child.style.backgroundColor = 'azure';
+				previousColor = 'azure';
+			}
+		}
+}*/
+let cells = document.getElementsByClassName('cell');
+let rows = document.getElementsByClassName('row');
+for (let elem of cells) elem.addEventListener('click', testClick);
+//for (let r of rows) paintTheCellsBlackANdWhite(r);
+
+let firstArr = createAnArrWithPiecePositions();
+console.log(firstArr);
+let button = document.querySelector('button');
+button.addEventListener('click', function () {
+	console.log(createAnArrWithPiecePositions());
+});
+
+// to do list
+// надо написать функцию для сопоставления массива и двух строк снизу и сверху соответсвенно
+// принимающую в качестве аргументов номер ячейки с которой начать и в течение 8-ми ячеек
+// выдаёт первую букву массива
