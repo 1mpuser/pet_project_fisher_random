@@ -64,6 +64,20 @@ function createAnArrWithPiecePositions() {
 	arrOfChessSquares = addSomethingInsteadFirstNumber(arrOfChessSquares, 'rook');
 	return arrOfChessSquares;
 }
+
+let chessArr = createAnArrWithPiecePositions();
+
+function placeFirstLettersInBlocksFromSomeCellPosition(numOfCellPosition) {
+	//а после и картинки с помощью другой функции
+	for (let i = 0; i < chessArr.length; i++) {
+		let firstLetter = chessArr[i].charAt(0);
+		if (firstLetter == 'k') {
+			if (chessArr[i] == 'king') firstLetter = 'kg';
+			else firstLetter = 'kn';
+		}
+		cells[numOfCellPosition + i].innerText = firstLetter;
+	}
+}
 function firstSymbolOfString(str) {
 	return str.charAt(0);
 }
@@ -112,11 +126,11 @@ function testClick() {
 }*/
 let cells = document.getElementsByClassName('cell');
 let rows = document.getElementsByClassName('row');
-for (let elem of cells) elem.addEventListener('click', testClick);
+//for (let elem of cells) elem.addEventListener('click', testClick);
+placeFirstLettersInBlocksFromSomeCellPosition(0);
+placeFirstLettersInBlocksFromSomeCellPosition(56);
 //for (let r of rows) paintTheCellsBlackANdWhite(r);
 
-let firstArr = createAnArrWithPiecePositions();
-console.log(firstArr);
 let button = document.querySelector('button');
 button.addEventListener('click', function () {
 	console.log(createAnArrWithPiecePositions());
