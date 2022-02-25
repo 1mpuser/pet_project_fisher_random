@@ -78,6 +78,11 @@ function placeFirstLettersInBlocksFromSomeCellPosition(numOfCellPosition) {
 		cells[numOfCellPosition + i].innerText = firstLetter;
 	}
 }
+function placePawnsInCells(numOfCellPosition) {
+	for (let i = 0; i < 8; i++) {
+		cells[numOfCellPosition + i].innerText = 'p';
+	}
+}
 function firstSymbolOfString(str) {
 	return str.charAt(0);
 }
@@ -126,17 +131,22 @@ function testClick() {
 }*/
 let cells = document.getElementsByClassName('cell');
 let rows = document.getElementsByClassName('row');
-//for (let elem of cells) elem.addEventListener('click', testClick);
+for (let elem of cells) elem.addEventListener('click', testClick);
 placeFirstLettersInBlocksFromSomeCellPosition(0);
 placeFirstLettersInBlocksFromSomeCellPosition(56);
+placePawnsInCells(8);
+placePawnsInCells(48);
+
 //for (let r of rows) paintTheCellsBlackANdWhite(r);
 
 let button = document.querySelector('button');
 button.addEventListener('click', function () {
-	console.log(createAnArrWithPiecePositions());
+	chessArr = createAnArrWithPiecePositions();
+	//console.log(chessArr);
+	placeFirstLettersInBlocksFromSomeCellPosition(0);
+	placeFirstLettersInBlocksFromSomeCellPosition(56);
 });
 
-// to do list
-// надо написать функцию для сопоставления массива и двух строк снизу и сверху соответсвенно
-// принимающую в качестве аргументов номер ячейки с которой начать и в течение 8-ми ячеек
-// выдаёт первую букву массива
+// // to do list
+// добавить картинки к фигурам в качестве функции и привязать
+// к кллику на этом всё
