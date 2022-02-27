@@ -11,7 +11,6 @@ function createAnArrWithPiecePositions() {
 		let tmpN = i - 1;
 		arrOfChessSquares[tmpN] = Number(i);
 	}
-	//for (let i = 0; i <= 10; i++) console.log(randomNumFromTo(0, 3));
 	let whiteSquaresIndexes = [1, 3, 5, 7];
 	let blackSquaresIndexes = [0, 2, 4, 6];
 	let arrOfrandomIndexesFromZeroToThreeForBishops = [];
@@ -68,7 +67,6 @@ function createAnArrWithPiecePositions() {
 let chessArr = createAnArrWithPiecePositions();
 
 function placeFirstLettersInBlocksFromSomeCellPosition(numOfCellPosition) {
-	//а после и картинки с помощью другой функции
 	for (let i = 0; i < chessArr.length; i++) {
 		let firstLetter = chessArr[i].charAt(0);
 		if (firstLetter == 'k') {
@@ -78,20 +76,63 @@ function placeFirstLettersInBlocksFromSomeCellPosition(numOfCellPosition) {
 		cells[numOfCellPosition + i].innerText = firstLetter;
 	}
 }
-function placePawnsInCells(numOfCellPosition) {
-	for (let i = 0; i < 8; i++) {
-		cells[numOfCellPosition + i].innerText = 'p';
-	}
-}
+
 function firstSymbolOfString(str) {
 	return str.charAt(0);
 }
-function testClick() {
-	for (let i = 0; i < cells.length; i++) {
-		if (cells[i] == this) alert(i);
+function writeInCellWithIndexPngImage(cellIndex, wayToImage) {
+	let cell = cells[cellIndex];
+	let image = document.createElement('img');
+	image.src = wayToImage;
+	cell.append(image);
+}
+
+function createImgWithWayInCell(cell, imgLocation) {
+	let imgElem = document.createElement('img');
+	imgElem.src = imgLocation;
+	cell.append(imgElem);
+}
+
+function drawPawns() {
+	for (let i = 0; i < 8; i++) {
+		let blackIndex = 8 + i;
+		let whiteIndex = 48 + i;
+		writeInCellWithIndexPngImage(blackIndex, 'blackPawn.png');
+		writeInCellWithIndexPngImage(whiteIndex, 'whitePawn.png');
 	}
 }
 
+function findAllCellsWithSameTextAndPutThemInArray(textInCells) {
+	let arrayOfSimilarCells = [];
+	for (let cell of cells) {
+		if (cell.innerText == textInCells) arrayOfSimilarCells.push(cell);
+	}
+	return arrayOfSimilarCells;
+}
+
+function putPicturesInCellsWithSameText(text, wayToThePictureInString) {
+	//that could be with black and white, which is added to
+	//variable 'wayToThePictureInString'
+	let arrOfCells = findAllCellsWithSameTextAndPutThemInArray(text);
+	let lastIndexOfBlackFIgures = arrOfCells.length / 2; //it could be 1 or 2
+	let tmpWayToThePictureInString = 'black' + wayToThePictureInString; //of course it wouldn't
+	//work with long way to a picture, need to rework
+	for (let i = 0; i < arrOfCells.length; i++) {
+		if (i >= lastIndexOfBlackFIgures) {
+			tmpWayToThePictureInString = 'white' + wayToThePictureInString;
+		}
+		arrOfCells[i].innerText = '';
+		createImgWithWayInCell(arrOfCells[i], tmpWayToThePictureInString);
+	}
+}
+
+function replaceLettersWithPictures() {
+	putPicturesInCellsWithSameText('r', 'Rook.png');
+	putPicturesInCellsWithSameText('kn', 'Knight.png');
+	putPicturesInCellsWithSameText('b', 'Bishop.png');
+	putPicturesInCellsWithSameText('q', 'Queen.png');
+	putPicturesInCellsWithSameText('kg', 'King.png');
+}
 /*function paintTheCellsBlackANdWhite(row) {
 	let children = row.children;
 	let numberOfRow;
@@ -131,13 +172,10 @@ function testClick() {
 }*/
 let cells = document.getElementsByClassName('cell');
 let rows = document.getElementsByClassName('row');
-for (let elem of cells) elem.addEventListener('click', testClick);
 placeFirstLettersInBlocksFromSomeCellPosition(0);
 placeFirstLettersInBlocksFromSomeCellPosition(56);
-placePawnsInCells(8);
-placePawnsInCells(48);
-
-//for (let r of rows) paintTheCellsBlackANdWhite(r);
+drawPawns();
+replaceLettersWithPictures();
 
 let button = document.querySelector('button');
 button.addEventListener('click', function () {
@@ -145,8 +183,7 @@ button.addEventListener('click', function () {
 	//console.log(chessArr);
 	placeFirstLettersInBlocksFromSomeCellPosition(0);
 	placeFirstLettersInBlocksFromSomeCellPosition(56);
+	replaceLettersWithPictures();
 });
-
-// // to do list
-// добавить картинки к фигурам в качестве функции и привязать
-// к кллику на этом всё
+// to-do
+//приписать пнаименования полей в css
