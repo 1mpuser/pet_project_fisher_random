@@ -1,4 +1,10 @@
 'use strict';
+let arrOfValidPictureRegExpExtensions = [
+	/.+\.png/,
+	/.+\.jpeg/,
+	/.+\.gif/,
+	/.+\.bmp/,
+];
 function createAnArrWithPiecePositions() {
 	function randomNumFromTo(min, max) {
 		max++;
@@ -38,29 +44,35 @@ function createAnArrWithPiecePositions() {
 		});
 		return arr;
 	}
-	arrOfChessSquares = addSomeLetterInsteadRandomNumber(
-		arrOfChessSquares,
-		'knight'
-	);
-	arrOfChessSquares = addSomeLetterInsteadRandomNumber(
-		arrOfChessSquares,
-		'knight'
-	);
+	for (let i = 0; i < 2; i++)
+		arrOfChessSquares = addSomeLetterInsteadRandomNumber(
+			arrOfChessSquares,
+			'knight'
+		);
 
 	arrOfChessSquares = addSomeLetterInsteadRandomNumber(
 		arrOfChessSquares,
 		'queen'
 	);
 
-	function addSomethingInsteadFirstNumber(arr, something) {
+	function addSomethingInsteadFirstNumberInArr(arr, something) {
 		let firstNumber = arr.find((elem) => Number(elem) == elem);
 		let index = arr.indexOf(firstNumber);
 		arr[index] = something;
 		return arr;
 	}
-	arrOfChessSquares = addSomethingInsteadFirstNumber(arrOfChessSquares, 'rook');
-	arrOfChessSquares = addSomethingInsteadFirstNumber(arrOfChessSquares, 'king');
-	arrOfChessSquares = addSomethingInsteadFirstNumber(arrOfChessSquares, 'rook');
+	arrOfChessSquares = addSomethingInsteadFirstNumberInArr(
+		arrOfChessSquares,
+		'rook'
+	);
+	arrOfChessSquares = addSomethingInsteadFirstNumberInArr(
+		arrOfChessSquares,
+		'king'
+	);
+	arrOfChessSquares = addSomethingInsteadFirstNumberInArr(
+		arrOfChessSquares,
+		'rook'
+	);
 	return arrOfChessSquares;
 }
 
@@ -85,6 +97,29 @@ function writeInCellWithIndexPngImage(cellIndex, wayToImage) {
 	let image = document.createElement('img');
 	image.src = wayToImage;
 	cell.append(image);
+}
+function addTheRightWayWithRegularExpression(strWithWayWithPng) {
+	//that would be a dangerous code with exceptions (((oh yeah)))
+	function isThisStringHasWantedFormatOfPicture(
+		wayToImage,
+		...wantedPictureFormats
+	) {
+		return wantedPictureFormats.some((elem) => elem.test(wayToImage));
+	}
+	let isThereAGoodExtension = isThisStringHasWantedFormatOfPicture(
+		strWithWayWithPng,
+		arrOfValidPictureRegExpExtensions
+	);
+	if (!isThereAGoodExtension)
+		throw 'There is no valid Picture Extensions in arr or this is not good extension';
+	let tmpImg = new Image();
+	tmpImg.src = strWithWayWithPng;
+	tmpImg.onload = function () {
+		return true;
+	};
+	tmpImg.onerror = function () {
+		throw 'Такого пути попросту нет';
+	};
 }
 
 function createImgWithWayInCell(cell, imgLocation) {
@@ -185,5 +220,3 @@ button.addEventListener('click', function () {
 	placeFirstLettersInBlocksFromSomeCellPosition(56);
 	replaceLettersWithPictures();
 });
-// to-do
-//приписать пнаименования полей в css
