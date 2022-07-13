@@ -1,16 +1,32 @@
 'use strict';
-let arrOfValidPictureRegExpExtensions = [
+const arrOfValidPictureRegExpExtensions = [
 	/.+\.png/,
 	/.+\.jpeg/,
 	/.+\.gif/,
 	/.+\.bmp/,
 ];
-class WrongWayError extends Error {
-	constructor(message) {
-		super(message);
-		this.name = 'WrongWayError';
-	}
-}
+
+let chessArr = createAnArrWithPiecePositions();
+
+let cells = document.getElementsByClassName('cell');
+let rows = document.getElementsByClassName('row');
+placeFirstLettersInBlocksFromSomeCellPosition(0);
+placeFirstLettersInBlocksFromSomeCellPosition(56);
+drawPawns();
+replaceLettersWithPictures();
+
+let button = document.querySelector('button');
+button.addEventListener('click', function () {
+	chessArr = createAnArrWithPiecePositions();
+	//console.log(chessArr);
+	placeFirstLettersInBlocksFromSomeCellPosition(0);
+	placeFirstLettersInBlocksFromSomeCellPosition(56);
+	replaceLettersWithPictures();
+});
+
+/////////////
+//////Slashes for functions separation
+
 function createAnArrWithPiecePositions() {
 	function randomNumFromTo(min, max) {
 		max++;
@@ -82,8 +98,44 @@ function createAnArrWithPiecePositions() {
 	return arrOfChessSquares;
 }
 
-let chessArr = createAnArrWithPiecePositions();
+function checkAndGetWrongPathErrorOfSource(src) {
+	let whiteSrc = 'white' + src;
+	let blackSrc = 'black' + src;
+	let whiteFlag,
+		blackFlag = false;
+	isValidPath(whiteSrc, "White way isn't working").catch((error) => {
+		console.log(error);
+		whiteFlag = true;
+	});
+	isValidPath(blackSrc, "Black way isn't working").catch((error) => {
+		console.log(error);
+		blackFlag = true;
+	});
+}
 
+function isValidPath(src, errorMessage) {
+	if (!String(errorMessage)) errorMessage = 'This way is not good';
+	return new Promise(function (resolve, reject) {
+		let image = document.createElement('img');
+		image.src = src;
+		image.onload = () => resolve(true);
+		image.onerror = () => reject(new WrongWayError(errorMessage));
+	});
+}
+
+function replaceLettersWithPictures() {
+	putPicturesInCellsWithSameText('r', 'Rook.png');
+	putPicturesInCellsWithSameText('kn', 'Knight.png');
+	putPicturesInCellsWithSameText('b', 'Bishop.png');
+	putPicturesInCellsWithSameText('q', 'Queen.png');
+	putPicturesInCellsWithSameText('kg', 'King.png');
+}
+class WrongWayError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = 'WrongWayError';
+	}
+}
 function placeFirstLettersInBlocksFromSomeCellPosition(numOfCellPosition) {
 	for (let i = 0; i < chessArr.length; i++) {
 		let firstLetter = chessArr[i].charAt(0);
@@ -165,51 +217,4 @@ function putPicturesInCellsWithSameText(text, wayToThePictureInString) {
 		arrOfCells[i].innerText = '';
 		createImgWithWayInCell(arrOfCells[i], tmpWayToThePictureInString);
 	}
-}
-
-function replaceLettersWithPictures() {
-	putPicturesInCellsWithSameText('r', 'Rook.png');
-	putPicturesInCellsWithSameText('kn', 'Knight.png');
-	putPicturesInCellsWithSameText('b', 'Bishop.png');
-	putPicturesInCellsWithSameText('q', 'Queen.png');
-	putPicturesInCellsWithSameText('kg', 'King.png');
-}
-
-let cells = document.getElementsByClassName('cell');
-let rows = document.getElementsByClassName('row');
-placeFirstLettersInBlocksFromSomeCellPosition(0);
-placeFirstLettersInBlocksFromSomeCellPosition(56);
-drawPawns();
-replaceLettersWithPictures();
-
-let button = document.querySelector('button');
-button.addEventListener('click', function () {
-	chessArr = createAnArrWithPiecePositions();
-	//console.log(chessArr);
-	placeFirstLettersInBlocksFromSomeCellPosition(0);
-	placeFirstLettersInBlocksFromSomeCellPosition(56);
-	replaceLettersWithPictures();
-});
-function isValidPath(src, errorMessage) {
-	if (!String(errorMessage)) errorMessage = 'This way is not good';
-	return new Promise(function (resolve, reject) {
-		let image = document.createElement('img');
-		image.src = src;
-		image.onload = () => resolve(true);
-		image.onerror = () => reject(new WrongWayError(errorMessage));
-	});
-}
-function checkAndGetWrongPathErrorOfSource(src) {
-	let whiteSrc = 'white' + src;
-	let blackSrc = 'black' + src;
-	let whiteFlag,
-		blackFlag = false;
-	isValidPath(whiteSrc, "White way isn't working").catch((error) => {
-		console.log(error);
-		whiteFlag = true;
-	});
-	isValidPath(blackSrc, "Black way isn't working").catch((error) => {
-		console.log(error);
-		blackFlag = true;
-	});
 }
