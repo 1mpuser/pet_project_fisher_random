@@ -5,6 +5,12 @@ let arrOfValidPictureRegExpExtensions = [
 	/.+\.gif/,
 	/.+\.bmp/,
 ];
+class WrongWayError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = 'WrongWayError';
+	}
+}
 function createAnArrWithPiecePositions() {
 	function randomNumFromTo(min, max) {
 		max++;
@@ -168,43 +174,7 @@ function replaceLettersWithPictures() {
 	putPicturesInCellsWithSameText('q', 'Queen.png');
 	putPicturesInCellsWithSameText('kg', 'King.png');
 }
-/*function paintTheCellsBlackANdWhite(row) {
-	let children = row.children;
-	let numberOfRow;
-	let colorOfFirstCell;
-	let previousColor = '';
-	for (let i = 0; i < rows.length; i++) {
-		if (row[i] === row) {
-			numberOfRow = i;
-			break;
-		}
-	}
-	console.log(numberOfRow);
-	if (numberOfRow % 2 == 0) colorOfFirstCell = 'azure';
-	else colorOfFirstCell = 'dimgray';
-	if (colorOfFirstCell == 'azure') {
-		for (let child of children) {
-			if (previousColor == '' || previousColor == 'dimgray') {
-				child.style.backgroundColor = 'azure';
-				previousColor = 'azure';
-			}
-			if (previousColor == 'azure') {
-				child.style.backgroundColor = 'dimgray';
-				previousColor = 'dimgray';
-			}
-		}
-	} else
-		for (let child of children) {
-			if (previousColor == '' || previousColor == 'azure') {
-				child.style.backgroundColor = 'dimgray';
-				previousColor = 'dimgray';
-			}
-			if (previousColor == 'dimgray') {
-				child.style.backgroundColor = 'azure';
-				previousColor = 'azure';
-			}
-		}
-}*/
+
 let cells = document.getElementsByClassName('cell');
 let rows = document.getElementsByClassName('row');
 placeFirstLettersInBlocksFromSomeCellPosition(0);
@@ -220,3 +190,26 @@ button.addEventListener('click', function () {
 	placeFirstLettersInBlocksFromSomeCellPosition(56);
 	replaceLettersWithPictures();
 });
+function isValidPath(src, errorMessage) {
+	if (!String(errorMessage)) errorMessage = 'This way is not good';
+	return new Promise(function (resolve, reject) {
+		let image = document.createElement('img');
+		image.src = src;
+		image.onload = () => resolve(true);
+		image.onerror = () => reject(new WrongWayError(errorMessage));
+	});
+}
+function checkAndGetWrongPathErrorOfSource(src) {
+	let whiteSrc = 'white' + src;
+	let blackSrc = 'black' + src;
+	let whiteFlag,
+		blackFlag = false;
+	isValidPath(whiteSrc, "White way isn't working").catch((error) => {
+		console.log(error);
+		whiteFlag = true;
+	});
+	isValidPath(blackSrc, "Black way isn't working").catch((error) => {
+		console.log(error);
+		blackFlag = true;
+	});
+}
